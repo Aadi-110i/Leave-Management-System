@@ -45,9 +45,9 @@ const Login = () => {
     };
 
     const demoAccounts = [
-        { role: 'Admin', email: 'admin@elms.com', password: 'admin123' },
-        { role: 'Manager', email: 'manager@elms.com', password: 'manager123' },
-        { role: 'Employee', email: 'john@elms.com', password: 'emp123' },
+        { role: 'Admin', email: import.meta.env.VITE_DEMO_ADMIN_EMAIL || 'admin@elms.com', password: import.meta.env.VITE_DEMO_ADMIN_PASSWORD || '' },
+        { role: 'Manager', email: import.meta.env.VITE_DEMO_MANAGER_EMAIL || 'manager@elms.com', password: import.meta.env.VITE_DEMO_MANAGER_PASSWORD || '' },
+        { role: 'Employee', email: import.meta.env.VITE_DEMO_EMPLOYEE_EMAIL || 'john@elms.com', password: import.meta.env.VITE_DEMO_EMPLOYEE_PASSWORD || '' },
     ];
 
     const fillDemo = (account) => {

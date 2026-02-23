@@ -19,7 +19,7 @@ const seed = async () => {
         const admin = await User.create({
             name: 'Admin User',
             email: 'admin@elms.com',
-            password: 'admin123',
+            password: process.env.DEMO_ADMIN_PASSWORD,
             role: 'admin',
             department: 'IT',
         });
@@ -27,7 +27,7 @@ const seed = async () => {
         const manager = await User.create({
             name: 'Sarah Johnson',
             email: 'manager@elms.com',
-            password: 'manager123',
+            password: process.env.DEMO_MANAGER_PASSWORD,
             role: 'manager',
             department: 'Engineering',
         });
@@ -35,7 +35,7 @@ const seed = async () => {
         const manager2 = await User.create({
             name: 'Mike Williams',
             email: 'mike@elms.com',
-            password: 'manager123',
+            password: process.env.DEMO_MANAGER_PASSWORD,
             role: 'manager',
             department: 'HR',
         });
@@ -43,7 +43,7 @@ const seed = async () => {
         const emp1 = await User.create({
             name: 'John Doe',
             email: 'john@elms.com',
-            password: 'emp123',
+            password: process.env.DEMO_EMPLOYEE_PASSWORD,
             role: 'employee',
             department: 'Engineering',
         });
@@ -51,7 +51,7 @@ const seed = async () => {
         const emp2 = await User.create({
             name: 'Anita Singh',
             email: 'anita@elms.com',
-            password: 'emp123',
+            password: process.env.DEMO_EMPLOYEE_PASSWORD,
             role: 'employee',
             department: 'Marketing',
         });
@@ -59,7 +59,7 @@ const seed = async () => {
         const emp3 = await User.create({
             name: 'Raj Kumar',
             email: 'raj@elms.com',
-            password: 'emp123',
+            password: process.env.DEMO_EMPLOYEE_PASSWORD,
             role: 'employee',
             department: 'Finance',
         });
