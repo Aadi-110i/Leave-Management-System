@@ -47,10 +47,14 @@ app.use((req, res) => {
 
 // Global error handler
 app.use((err, req, res, next) => {
+    console.error(`[ERROR] ${req.method} ${req.url} - ${err.message}`);
     console.error(err.stack);
+
     res.status(err.statusCode || 500).json({
         success: false,
         message: err.message || 'Internal Server Error',
+        // In production/Vercel, we normally hide details, but we need them now to debug
+        error: process.env.NODE_ENV === 'production' ? err.message : err.stack,
     });
 });
 
