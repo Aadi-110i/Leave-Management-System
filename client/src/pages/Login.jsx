@@ -38,7 +38,8 @@ const Login = () => {
             else if (user.role === 'manager') navigate('/manager');
             else navigate('/employee');
         } catch (err) {
-            toast.error(err.response?.data?.message || 'Login failed. Please try again.');
+            const errorMsg = err.response?.data?.error || err.response?.data?.message || 'Login failed. Please try again.';
+            toast.error(errorMsg);
         } finally {
             setLoading(false);
         }
