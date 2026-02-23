@@ -18,12 +18,12 @@ const DEPARTMENTS = ['Engineering', 'HR', 'Finance', 'Marketing', 'Sales', 'Oper
 
 const roleBadge = (role) => {
     const classes = {
-        admin: 'bg-purple-100 text-purple-700',
-        manager: 'bg-blue-100 text-blue-700',
-        employee: 'bg-beige-200 text-dark',
+        admin: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+        manager: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+        employee: 'bg-green-500/10 text-green-400 border-green-500/20',
     };
     return (
-        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${classes[role] || 'bg-gray-100 text-gray-700'}`}>
+        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold capitalize border ${classes[role] || 'bg-gray-500/10 text-gray-400 border-gray-500/20'}`}>
             {role}
         </span>
     );
@@ -66,14 +66,14 @@ const UserModal = ({ user, onClose, onSuccess }) => {
 
     return (
         <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
-            <div className="modal-content">
+            <div className="modal-content" style={{ background: '#1e1e1e', border: '1px solid #2a2a2a' }}>
                 <div className="flex items-center justify-between mb-6">
                     <div>
-                        <h2 className="text-xl font-bold text-dark">{isEdit ? 'Edit User' : 'Add New User'}</h2>
-                        <p className="text-sm text-dark/50 mt-0.5">{isEdit ? 'Update user information' : 'Create a new system user'}</p>
+                        <h2 className="text-xl font-bold text-white">{isEdit ? 'Edit User' : 'Add New User'}</h2>
+                        <p className="text-sm text-white/50 mt-0.5">{isEdit ? 'Update user information' : 'Create a new system user'}</p>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 rounded-lg bg-beige-100 hover:bg-beige-200 flex items-center justify-center">
-                        <MdClose size={18} className="text-dark" />
+                    <button onClick={onClose} className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors">
+                        <MdClose size={18} className="text-white" />
                     </button>
                 </div>
 
@@ -91,7 +91,7 @@ const UserModal = ({ user, onClose, onSuccess }) => {
                     </div>
 
                     <div>
-                        <label className="form-label">Email Address <span className="text-red-500">*</span></label>
+                        <label className="form-label text-white/70">Email Address <span className="text-red-500">*</span></label>
                         <input
                             id="user-modal-email"
                             type="email"
@@ -103,8 +103,8 @@ const UserModal = ({ user, onClose, onSuccess }) => {
                     </div>
 
                     <div>
-                        <label className="form-label">
-                            Password {isEdit && <span className="text-dark/40 font-normal">(leave blank to keep unchanged)</span>}
+                        <label className="form-label text-white/70">
+                            Password {isEdit && <span className="text-white/40 font-normal">(leave blank to keep unchanged)</span>}
                             {!isEdit && <span className="text-red-500"> *</span>}
                         </label>
                         <input
@@ -119,7 +119,7 @@ const UserModal = ({ user, onClose, onSuccess }) => {
 
                     <div className="grid grid-cols-2 gap-3">
                         <div>
-                            <label className="form-label">Role</label>
+                            <label className="form-label text-white/70">Role</label>
                             <select
                                 id="user-modal-role"
                                 value={form.role}
@@ -130,7 +130,7 @@ const UserModal = ({ user, onClose, onSuccess }) => {
                             </select>
                         </div>
                         <div>
-                            <label className="form-label">Department</label>
+                            <label className="form-label text-white/70">Department</label>
                             <select
                                 id="user-modal-department"
                                 value={form.department}
@@ -143,7 +143,7 @@ const UserModal = ({ user, onClose, onSuccess }) => {
                     </div>
 
                     <div className="flex gap-3 pt-2">
-                        <button type="button" onClick={onClose} className="btn-secondary flex-1">Cancel</button>
+                        <button type="button" onClick={onClose} className="btn-secondary flex-1 border-[#2a2a2a]">Cancel</button>
                         <button type="submit" disabled={loading} className="btn-primary flex-1">
                             {loading ? (
                                 <span className="flex items-center justify-center gap-2">
@@ -232,23 +232,29 @@ const AdminPanel = () => {
     };
 
     return (
-        <div className="flex min-h-screen">
+        <div className="flex h-screen overflow-hidden" style={{ background: '#111111' }}>
             <Sidebar />
             <div className="flex-1 flex flex-col min-w-0">
                 <Navbar title="Admin Panel" />
 
-                <main className="flex-1 p-6 space-y-6">
+                <main className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-4 sm:space-y-6">
                     {/* Stats */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                         {[
-                            { label: 'Total Users', value: stats.total, color: 'bg-dark text-beige-300' },
-                            { label: 'Admins', value: stats.admins, color: 'bg-purple-100 text-purple-700' },
-                            { label: 'Managers', value: stats.managers, color: 'bg-blue-100 text-blue-700' },
-                            { label: 'Employees', value: stats.employees, color: 'bg-beige-200 text-dark' },
-                        ].map((s) => (
-                            <div key={s.label} className={`card flex flex-col items-center py-5 ${s.color}`}>
-                                <p className="text-3xl font-bold">{s.value}</p>
-                                <p className="text-sm font-medium mt-1 opacity-80">{s.label}</p>
+                            { label: 'Total Users', value: stats.total, icon: <MdPeople size={20} />, color: '#4ade80' },
+                            { label: 'Admins', value: stats.admins, icon: <MdAdminPanelSettings size={20} />, color: '#a855f7' },
+                            { label: 'Managers', value: stats.managers, icon: <MdPeople size={20} />, color: '#3b82f6' },
+                            { label: 'Employees', value: stats.employees, icon: <MdPeople size={20} />, color: '#16a34a' },
+                        ].map((c) => (
+                            <div key={c.label} className="card-hover">
+                                <div className="flex items-center justify-between mb-3">
+                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                                        style={{ background: `${c.color}18`, color: c.color }}>
+                                        {c.icon}
+                                    </div>
+                                    <span style={{ color: c.color, fontSize: 24, fontWeight: 700 }}>{c.value}</span>
+                                </div>
+                                <p className="text-xs font-medium" style={{ color: '#6b6b6b' }}>{c.label}</p>
                             </div>
                         ))}
                     </div>
@@ -278,8 +284,8 @@ const AdminPanel = () => {
                         <div className="card">
                             <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
                                 <div>
-                                    <h2 className="font-bold text-dark text-lg">User Management</h2>
-                                    <p className="text-sm text-dark/50">Manage all system users and their roles</p>
+                                    <h2 className="font-bold text-white text-lg font-outfit">User Management</h2>
+                                    <p className="text-sm text-gray-400">Manage all system users and their roles</p>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <input
@@ -289,6 +295,7 @@ const AdminPanel = () => {
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
                                         className="input-field w-52 py-2"
+                                        style={{ background: '#1e1e1e', border: '1px solid #2a2a2a', color: '#f0f0f0' }}
                                     />
                                     <button
                                         id="add-user-btn"
@@ -316,31 +323,32 @@ const AdminPanel = () => {
                                             <div className="hidden lg:block overflow-x-auto">
                                                 <table className="w-full">
                                                     <thead>
-                                                        <tr className="bg-beige-100">
-                                                            <th className="table-header rounded-l-lg">Name</th>
-                                                            <th className="table-header">Email</th>
-                                                            <th className="table-header">Department</th>
-                                                            <th className="table-header">Role</th>
-                                                            <th className="table-header">Status</th>
-                                                            <th className="table-header rounded-r-lg">Actions</th>
+                                                        <tr style={{ background: '#1e1e1e' }}>
+                                                            <th className="table-header rounded-l-lg" style={{ color: '#6b6b6b' }}>Name</th>
+                                                            <th className="table-header" style={{ color: '#6b6b6b' }}>Email</th>
+                                                            <th className="table-header" style={{ color: '#6b6b6b' }}>Department</th>
+                                                            <th className="table-header" style={{ color: '#6b6b6b' }}>Role</th>
+                                                            <th className="table-header" style={{ color: '#6b6b6b' }}>Status</th>
+                                                            <th className="table-header rounded-r-lg" style={{ color: '#6b6b6b' }}>Actions</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody className="divide-y divide-beige-100">
+                                                    <tbody className="divide-y divide-[#2a2a2a]">
                                                         {filteredUsers.map((user) => (
-                                                            <tr key={user._id} className="hover:bg-beige-50 transition-colors">
+                                                            <tr key={user._id} className="hover:bg-white/[0.02] transition-colors">
                                                                 <td className="table-cell">
                                                                     <div className="flex items-center gap-3">
-                                                                        <div className="w-9 h-9 rounded-full bg-dark text-beige-300 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                                                                        <div className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0"
+                                                                            style={{ background: 'rgba(74,222,128,0.15)', color: '#4ade80' }}>
                                                                             {user.name.charAt(0).toUpperCase()}
                                                                         </div>
-                                                                        <span className="font-medium text-dark">{user.name}</span>
+                                                                        <span className="font-semibold text-sm text-white">{user.name}</span>
                                                                     </div>
                                                                 </td>
-                                                                <td className="table-cell text-dark/60">{user.email}</td>
-                                                                <td className="table-cell text-dark/60">{user.department || '—'}</td>
+                                                                <td className="table-cell text-gray-400 text-sm">{user.email}</td>
+                                                                <td className="table-cell text-gray-400 text-sm">{user.department || '—'}</td>
                                                                 <td className="table-cell">{roleBadge(user.role)}</td>
                                                                 <td className="table-cell">
-                                                                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${user.isActive !== false ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
+                                                                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${user.isActive !== false ? 'bg-green-500/10 text-green-500 border-green-500/20' : 'bg-red-500/10 text-red-500 border-red-500/20'}`}>
                                                                         {user.isActive !== false ? 'Active' : 'Inactive'}
                                                                     </span>
                                                                 </td>
@@ -349,15 +357,15 @@ const AdminPanel = () => {
                                                                         <button
                                                                             id={`edit-user-${user._id}`}
                                                                             onClick={() => setModal({ open: true, user })}
-                                                                            className="w-8 h-8 rounded-lg bg-beige-100 hover:bg-beige-200 flex items-center justify-center transition-colors"
+                                                                            className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
                                                                             title="Edit user"
                                                                         >
-                                                                            <MdEdit size={15} className="text-dark" />
+                                                                            <MdEdit size={15} className="text-white" />
                                                                         </button>
                                                                         <button
                                                                             id={`delete-user-${user._id}`}
                                                                             onClick={() => handleDelete(user)}
-                                                                            className="w-8 h-8 rounded-lg hover:bg-red-50 flex items-center justify-center transition-colors"
+                                                                            className="w-8 h-8 rounded-lg hover:bg-red-500/10 flex items-center justify-center transition-colors"
                                                                             title="Delete user"
                                                                         >
                                                                             <MdDelete size={15} className="text-red-500" />
@@ -373,36 +381,37 @@ const AdminPanel = () => {
                                             {/* Mobile Card View */}
                                             <div className="lg:hidden space-y-4">
                                                 {filteredUsers.map((user) => (
-                                                    <div key={user._id} className="p-4 rounded-xl border border-beige-100 bg-white shadow-sm space-y-3">
+                                                    <div key={user._id} className="p-4 rounded-xl border border-[#2a2a2a] bg-[#1e1e1e] space-y-3">
                                                         <div className="flex items-center justify-between">
                                                             <div className="flex items-center gap-3">
-                                                                <div className="w-10 h-10 rounded-full bg-dark text-beige-300 flex items-center justify-center font-bold text-sm">
+                                                                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs"
+                                                                    style={{ background: 'rgba(74,222,128,0.15)', color: '#4ade80' }}>
                                                                     {user.name.charAt(0).toUpperCase()}
                                                                 </div>
                                                                 <div>
-                                                                    <p className="font-bold text-dark">{user.name}</p>
-                                                                    <p className="text-xs text-dark/50">{user.email}</p>
+                                                                    <p className="font-bold text-white">{user.name}</p>
+                                                                    <p className="text-[10px] text-gray-400">{user.email}</p>
                                                                 </div>
                                                             </div>
                                                             <div className="flex flex-col items-end gap-1">
                                                                 {roleBadge(user.role)}
-                                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${user.isActive !== false ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
+                                                                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold border ${user.isActive !== false ? 'bg-green-500/10 text-green-500 border-green-500/20' : 'bg-red-500/10 text-red-500 border-red-500/20'}`}>
                                                                     {user.isActive !== false ? 'Active' : 'Inactive'}
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        <div className="pt-2 flex items-center justify-between border-t border-beige-50">
-                                                            <p className="text-xs text-dark/60 font-medium">Dept: {user.department || '—'}</p>
+                                                        <div className="pt-2 flex items-center justify-between border-t border-[#2a2a2a]">
+                                                            <p className="text-[10px] text-gray-500">Dept: {user.department || '—'}</p>
                                                             <div className="flex items-center gap-2">
                                                                 <button
                                                                     onClick={() => setModal({ open: true, user })}
-                                                                    className="px-3 py-1.5 rounded-lg bg-beige-100 text-dark text-xs font-semibold"
+                                                                    className="px-3 py-1.5 rounded-lg bg-white/5 text-white text-[10px] font-bold border border-[#2a2a2a]"
                                                                 >
                                                                     Edit
                                                                 </button>
                                                                 <button
                                                                     onClick={() => handleDelete(user)}
-                                                                    className="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 text-xs font-semibold"
+                                                                    className="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-500 text-[10px] font-bold border border-red-500/20"
                                                                 >
                                                                     Delete
                                                                 </button>
