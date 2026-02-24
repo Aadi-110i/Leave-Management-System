@@ -19,6 +19,22 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Health check (no DB required)
+app.get('/api/health', (req, res) => {
+    res.json({ success: true, message: 'Employee Leave Management API is running', timestamp: new Date() });
+});
+
+// Debug endpoint to check env vars on Vercel (does not expose values)
+app.get('/api/debug/env', (req, res) => {
+    res.json({
+        MONGO_URI: process.env.MONGO_URI ? `SET (starts with: ${process.env.MONGO_URI.substring(0, 20)}...)` : 'NOT SET ❌',
+        JWT_SECRET: process.env.JWT_SECRET ? 'SET ✅' : 'NOT SET ❌',
+        JWT_EXPIRE: process.env.JWT_EXPIRE || 'NOT SET ❌',
+        NODE_ENV: process.env.NODE_ENV || 'NOT SET',
+        VERCEL: process.env.VERCEL || 'NOT SET',
+    });
+});
+
 // Ensure DB is connected before handling any API request (critical for Vercel serverless)
 app.use('/api', async (req, res, next) => {
     try {
@@ -43,11 +59,6 @@ app.use('/api/leaves', leaveRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/swaps', swapRoutes);
 app.use('/api/reimbursements', reimbursementRoutes);
-
-// Health check
-app.get('/api/health', (req, res) => {
-    res.json({ success: true, message: 'Employee Leave Management API is running', timestamp: new Date() });
-});
 
 // 404
 app.use((req, res) => {
