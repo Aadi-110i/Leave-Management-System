@@ -8,11 +8,11 @@ const connectDB = async () => {
 
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI, {
-      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 10s
+      serverSelectionTimeoutMS: 3000, // Timeout after 3s (v2)
     });
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Connected (v2): ${conn.connection.host}`);
   } catch (error) {
-    console.error(`❌ MongoDB Connection Error: ${error.message}`);
+    console.error(`❌ MongoDB Connection Error (v2): ${error.message}`);
     // Do not call process.exit(1) on Vercel as it kills the serverless function
   }
 };
