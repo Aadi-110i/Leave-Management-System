@@ -6,9 +6,6 @@ import toast from 'react-hot-toast';
 import { MdEmail, MdLock, MdWork } from 'react-icons/md';
 import { GlowingEffect } from '../components/ui/glowing-effect';
 import { CalendarCheck, ShieldCheck, BarChart3, ArrowLeftRight, Bell, Users } from 'lucide-react';
-import { cn } from '../lib/utils';
-import { SplineScene } from '../components/ui/splite';
-import { Spotlight } from '../components/ui/spotlight';
 
 import Logo from "../assets/logo.png";
 

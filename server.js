@@ -10,16 +10,25 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const swapRoutes = require('./routes/swapRoutes');
 const reimbursementRoutes = require('./routes/reimbursementRoutes');
 
-connectDB();
-
 const app = express();
 
 app.use(cors({
-    origin: '*', // Allow all for production debugging, or list specific domains
+    origin: '*',
     credentials: true,
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Ensure DB is connected before handling any API request (critical for Vercel serverless)
+app.use('/api', async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error('❌ Failed to connect to database:', error.message);
+        res.status(503).json({ success: false, message: 'Database connection failed. Please try again.' });
+    }
+});
 
 // Request Logger
 app.use((req, res, next) => {

@@ -123,11 +123,11 @@ const seed = async () => {
 
         console.log('✅ Seeding complete!');
         console.log('\n📋 Demo Accounts:');
-        console.log('  Admin:    admin@elms.com    / admin123');
-        console.log('  Manager:  manager@elms.com  / manager123');
-        console.log('  Employee: john@elms.com     / emp123');
-        console.log('  Employee: anita@elms.com    / emp123');
-        console.log('  Employee: raj@elms.com      / emp123');
+        console.log(`  Admin:    admin@elms.com    / ${process.env.DEMO_ADMIN_PASSWORD}`);
+        console.log(`  Manager:  manager@elms.com  / ${process.env.DEMO_MANAGER_PASSWORD}`);
+        console.log(`  Employee: john@elms.com     / ${process.env.DEMO_EMPLOYEE_PASSWORD}`);
+        console.log(`  Employee: anita@elms.com    / ${process.env.DEMO_EMPLOYEE_PASSWORD}`);
+        console.log(`  Employee: raj@elms.com      / ${process.env.DEMO_EMPLOYEE_PASSWORD}`);
 
         mongoose.connection.close();
         process.exit(0);
