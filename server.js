@@ -24,17 +24,6 @@ app.get('/api/health', (req, res) => {
     res.json({ success: true, message: 'Employee Leave Management API is running', timestamp: new Date() });
 });
 
-// Debug endpoint to check env vars on Vercel (does not expose values)
-app.get('/api/debug/env', (req, res) => {
-    res.json({
-        MONGO_URI: process.env.MONGO_URI ? `SET (starts with: ${process.env.MONGO_URI.substring(0, 20)}...)` : 'NOT SET ❌',
-        JWT_SECRET: process.env.JWT_SECRET ? 'SET ✅' : 'NOT SET ❌',
-        JWT_EXPIRE: process.env.JWT_EXPIRE || 'NOT SET ❌',
-        NODE_ENV: process.env.NODE_ENV || 'NOT SET',
-        VERCEL: process.env.VERCEL || 'NOT SET',
-    });
-});
-
 // Ensure DB is connected before handling any API request (critical for Vercel serverless)
 app.use('/api', async (req, res, next) => {
     try {
@@ -44,9 +33,7 @@ app.use('/api', async (req, res, next) => {
         console.error('❌ Failed to connect to database:', error.message);
         res.status(503).json({
             success: false,
-            message: 'Database connection failed. Please try again.',
-            error: error.message,
-            mongoUriSet: !!process.env.MONGO_URI,
+            message: 'Database connection failed. Please try again.'
         });
     }
 });
