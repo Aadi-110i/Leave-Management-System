@@ -42,7 +42,12 @@ app.use('/api', async (req, res, next) => {
         next();
     } catch (error) {
         console.error('❌ Failed to connect to database:', error.message);
-        res.status(503).json({ success: false, message: 'Database connection failed. Please try again.' });
+        res.status(503).json({
+            success: false,
+            message: 'Database connection failed. Please try again.',
+            error: error.message,
+            mongoUriSet: !!process.env.MONGO_URI,
+        });
     }
 });
 
